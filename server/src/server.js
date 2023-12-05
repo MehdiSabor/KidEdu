@@ -9,13 +9,15 @@ const chatRoutes = require('./routes/chatRoute');
 const locationRoutes = require('./routes/locationRoute');
 const passport = require('passport');
 require('./config/passport'); // Import passport configuration
+const socketIo = require('./socket');
 
 const http = require('http');
-const socketIo = require('socket.io');
+
 
 
 const app = express();
 const PORT = 3000;
+
 
 
 
@@ -27,28 +29,19 @@ app.use(express.json()); // for parsing application/json
 
 
 const server = http.createServer(app);
-const io = socketIo(server);
-
+ // Adjust the path as necessary
+const io = socketIo.init(server);
 io.on('connection', (socket) => {
-  console.log('New client connected');
+  console.log('New socket connection:', socket.id);
 
-  socket.on('joinRoom', (roomId) => {
+  socket.on('join-room', (roomId) => {
+    console.log(`Socket ${socket.id} joined room ${roomId}`);
     socket.join(roomId);
   });
 
-  socket.on('sendMessage', (data) => {
-    io.to(data.roomId).emit('receiveMessage', data.message);
-    // Here you should also call the service to save the message to the database
-  });
-
-  // Listen for location updates from the child
-  socket.on('childLocationUpdate', ({ roomId, coords }) => {
-    // Here you should have authorization logic to verify the child
-    new LocationService(io).updateLocation(roomId, coords);
-  });
-
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    console.log('User disconnected', socket.id);
+    // Perform any cleanup or status updates needed
   });
 });
 
@@ -66,6 +59,11 @@ app.use('/location',locationRoutes);
 
 // ... integrate other routes
 
-app.listen(PORT, () => {
+
+
+server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+module.exports = { app, server, io };

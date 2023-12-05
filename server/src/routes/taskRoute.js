@@ -8,9 +8,11 @@ router.post('/create', authenticateJWT, isParentOfRoom, taskController.createTas
 router.delete('/delete/:taskId', authenticateJWT, isParentOfRoom, taskController.deleteTask);
 router.put('/update/:taskId', authenticateJWT, isParentOfRoom, taskController.updateTask);
 router.get('/getall/:roomId', belongsToRoom, taskController.getTaskForRoom);
-router.patch('/complete/:taskId', isChildOfRoom, taskController.completeTask);
+router.patch('/complete/:taskId', belongsToRoom, taskController.completeTask);
 router.patch('/confirm/:taskId', authenticateJWT, belongsToRoom, taskController.confirmTask);
 router.patch('/reject/:taskId', authenticateJWT, belongsToRoom, taskController.rejectTask);
+
+
 
 
 module.exports = router;

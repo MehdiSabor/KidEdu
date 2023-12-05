@@ -70,18 +70,18 @@ enum TaskStatus {
 model ClaimHistory {
   id        Int      @id @default(autoincrement())
   rewardId  Int
-  reward    Reward   @relation(fields: [rewardId], references: [id])
+  reward    Reward   @relation(fields: [rewardId], references: [id], onDelete: Cascade)
   roomId    Int
-  room      Room     @relation(fields: [roomId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
   claimedAt DateTime @default(now())
 }
 
 model TaskHistory {
   id        Int        @id @default(autoincrement())
   taskId    Int
-  task      Task       @relation(fields: [taskId], references: [id])
+  task      Task       @relation(fields: [taskId], references: [id], onDelete: Cascade)
   roomId    Int
-  room      Room       @relation(fields: [roomId], references: [id])
+  room      Room       @relation(fields: [roomId], references: [id], onDelete: Cascade)
   status    TaskStatus
   changedAt DateTime   @default(now())
 }

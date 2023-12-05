@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Parent {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  name         String
+  rooms        Room[]
+  messagesSent Message[]
+}
+
+model Child {
+  id           Int       @id @default(autoincrement())
+  name         String?
+  roomId       Int?      @unique
+  room         Room?     @relation(fields: [roomId], references: [id])
+  messagesSent Message[]
+}
+
+model Room {
+  id             Int            @id @default(autoincrement())
+  code           String         @unique
+  parentId       Int
+  parent         Parent         @relation(fields: [parentId], references: [id])
+  child          Child? // Making the child relationship optional
+  tasks          Task[]
+  rewards        Reward[]
+  total          Int            @default(0)
+  taskHistories  TaskHistory[]
+  claimHistories ClaimHistory[]
+  messages       Message[]
+}
+
+model Task {
+  id            Int           @id @default(autoincrement())
+  title         String
+  description   String?
+  status        TaskStatus    @default(PENDING)
+  points        Int
+  roomId        Int
+  room          Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  taskHistories TaskHistory[]
+}
+
+model Reward {
+  id             Int            @id @default(autoincrement())
+  name           String
+  description    String?
+  points         Int
+  roomId         Int
+  room           Room           @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  claimHistories ClaimHistory[]
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+  CONFIRMED
+  REJECTED
+}
+
+model ClaimHistory {
+  id        Int      @id @default(autoincrement())
+  rewardId  Int
+  reward    Reward   @relation(fields: [rewardId], references: [id])
+  roomId    Int
+  room      Room     @relation(fields: [roomId], references: [id])
+  claimedAt DateTime @default(now())
+}
+
+model TaskHistory {
+  id        Int        @id @default(autoincrement())
+  taskId    Int
+  task      Task       @relation(fields: [taskId], references: [id])
+  roomId    Int
+  room      Room       @relation(fields: [roomId], references: [id])
+  status    TaskStatus
+  changedAt DateTime   @default(now())
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  text      String
+  roomId    Int
+  room      Room     @relation(fields: [roomId], references: [id])
+  parentId  Int?
+  parent    Parent?  @relation(fields: [parentId], references: [id])
+  childId   Int?
+  child     Child?   @relation(fields: [childId], references: [id])
+  createdAt DateTime @default(now())
+}

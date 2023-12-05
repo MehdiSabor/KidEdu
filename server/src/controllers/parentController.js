@@ -9,5 +9,11 @@ exports.getParent = async (req, res) => {
     const parent = await parentService.getParent(req.params.id);
     res.json(parent);
 };
+
+exports.getRoomsForParent = async (req, res) => {
+   
+    const parent = await parentService.getRoomsForParent(req.user.parentId);
+    res.json(parent);
+};
 // ... other functions for Parent
 

@@ -13,10 +13,10 @@ const authenticateJWT = require('../middleware/authenticateJWT');
 
   
   // Using the combined middleware in your route
-  router.post('/send/:roomId', belongsToRoom, messageController.postMessage);
+  router.post('/send/:roomId', messageController.postMessage);
   
 // Endpoint to get all messages for a room
-router.get('/get/:roomId',belongsToRoom, messageController.getRoomMessages);
+router.get('/get/:roomId', messageController.getRoomMessages);
 
 module.exports = router;
 

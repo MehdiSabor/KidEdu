@@ -7,7 +7,7 @@ const { belongsToRoom, ensureChildProfile} = require('../middleware/accessContro
 
 
 router.post('/create', authenticateJWT, roomController.createRoom);
-router.delete('/delete/:roomId', authenticateJWT,belongsToRoom, roomController.deleteRoom);
+router.delete('/delete/:roomId',belongsToRoom, authenticateJWT, roomController.deleteRoom);
 router.post('/join', ensureChildProfile, roomController.joinRoom);
 router.get('/get/:roomId', belongsToRoom, roomController.getRoom);
 router.delete('/kick/:roomId', authenticateJWT, belongsToRoom, roomController.kickChild);

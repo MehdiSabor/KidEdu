@@ -6,7 +6,8 @@ exports.createTask = async (req, res) => {
 };
 
 exports.deleteTask = async (req, res) => {
-    await taskService.deleteTask(req.params.taskId);
+    console.log("delete",req.params);
+    await taskService.deleteTask(parseInt(req.params.taskId));
     res.json({ message: 'Task deleted successfully' });
 };
 
@@ -22,8 +23,17 @@ exports.getTaskForRoom = async (req, res) => {
 
 exports.completeTask = async (req, res) => {
     const { taskId } = req.params;
-    const task = await taskService.completeTask(parseInt(taskId));
-    res.json(task);
+    try{ 
+        const task = await taskService.completeTask(parseInt(taskId));
+        res.status(200).json({task, message: 'Task completed successfully' });
+    }
+        catch (error) {
+            // If a response has already been sent, do not send another one
+            if (!res.headersSent) {
+              res.status(500).json({ error: error.message });
+            }
+          }
+   
 }
 
 

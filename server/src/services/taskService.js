@@ -7,8 +7,10 @@ const createTask = async (data) => {
 };
 
 const deleteTask = async (taskId) => {
-    if (!taskId) {
-        throw new Error("Task ID is required");
+    const task = await prisma.task.findUnique({ where: { id: taskId } });
+    console.log(task)
+;    if (!task) {
+        throw new Error('Task not found');
     }
 
     return await prisma.task.delete({

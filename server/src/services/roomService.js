@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 exports.createRoom = async (parentId, code) => {
+
     
     return prisma.room.create({
         data: {
@@ -22,6 +23,7 @@ exports.deleteRoom = async (roomId, parentId) => {
         throw new Error('Room not found.');
     }
     
+   
     if (room.parentId !== parentId) {
         throw new Error('Unauthorized to delete this room.');
     }
@@ -32,6 +34,13 @@ exports.deleteRoom = async (roomId, parentId) => {
 
 
 exports.joinRoom = async (code, childId) => {
+
+  if (!code || !childId) {
+    
+    throw new Error("Missing code or child ID");
+  }
+
+
   const room = await prisma.room.findUnique({ 
     where: { code },
     include: { child: true }  // Include the child details
@@ -40,10 +49,12 @@ exports.joinRoom = async (code, childId) => {
     throw new Error("Invalid room code");
   }
 
-  console.log(room);
+ 
   // Check if the room already has a child and if the IDs are the same
   if (room.child && room.child.id !== parseInt(childId)) {
+    console.log("room for another one");
     throw new Error("Room is for another child");
+   
   }
 
 

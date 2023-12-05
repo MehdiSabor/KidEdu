@@ -110,6 +110,7 @@ async function belongsToRoom(req, res, next) {
   const token = req.headers['authorization']?.split(' ')[1];
   const childIdFromHeader = req.headers['x-child-id'];
   let userId;
+  
   let roomId = parseInt(req.params.roomId);
 
   if (token) {
