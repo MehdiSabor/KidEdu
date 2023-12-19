@@ -5,3 +5,7 @@ In addition to a streamlined codebase, this repository contains a suite of tests
 #  Client-Side React Native Overview
 
 this is the client-side segment of our class project's 3rd milestone, which complements the server-side solution crafted with Node.js. This React Native mobile application connects with the RESTful API, emphasizing efficient practices and security, mirroring changes made on the server side. We've implemented robust user authentication with JWT and thorough authorization checks for enhanced endpoint protection. The app is integrated with ngrok, enabling real-time server communication for a dynamic testing experience. For security reasons, access is limited to pre-authorized email addresses. This repository not only showcases the client-side interface but also reflects updates made on the server side, ensuring seamless integration and functionality.
+
+#  Chat Microservice Integration
+
+The integration of a new chat microservice marks a significant enhancement in the project's real-time communication capabilities, introducing a more dynamic and interactive user experience. To support seamless connectivity, the client architecture has been adapted to interact with two distinct URLs, both tunneled securely through ngrok. 
