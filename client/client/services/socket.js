@@ -2,7 +2,7 @@ import io from "socket.io-client";
 let socket;
 
 const connectToSocket = (roomId) => {
-  socket = io("https://9448-197-146-63-142.ngrok-free.app"); // Replace with your server URL
+  socket = io("https://1872-196-43-236-5.ngrok-free.app"); // Replace with your server URL
 
   socket.on('connect', () => {
     console.log('connected to socket server');

@@ -42,7 +42,7 @@ const UserTypeScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <WebViewHeader onBackPress={handleBackPress} />
         <WebView
-          source={{ uri: 'https://9448-197-146-63-142.ngrok-free.app/auth/google' }}
+          source={{ uri: 'https://7c76-196-43-236-5.ngrok-free.app/auth/google' }}
           userAgent="Mozilla/5.0 Google"
           domStorageEnabled={true}
           javaScriptEnabled={true}

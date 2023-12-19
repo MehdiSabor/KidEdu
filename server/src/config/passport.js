@@ -10,7 +10,7 @@ require('dotenv').config();
 passport.use(new GoogleStrategy({
     clientID: '697839643431-p9s1jmrn11v7ump26mi60mf76jmao59g.apps.googleusercontent.com',
     clientSecret: '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',
-    callbackURL: 'https://9448-197-146-63-142.ngrok-free.app/auth/google/callback'
+    callbackURL: 'https://7c76-196-43-236-5.ngrok-free.app/auth/google/callback'
 
 }, async (accessToken, refreshToken, profile, done) => {
     // Check if parent exists in DB

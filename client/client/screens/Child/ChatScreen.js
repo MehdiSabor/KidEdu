@@ -42,7 +42,7 @@ const ChatScreen = ({ route }) => {
     React.useCallback(() => {
       
     // Connect to the socket server
-    socket.current = io('https://9448-197-146-63-142.ngrok-free.app'); // Replace with your server URL
+    socket.current = io('https://1872-196-43-236-5.ngrok-free.app'); // Replace with your server URL
     console.log('Connecting to socket server');
 
     socket.current.emit('join-room', roomId);

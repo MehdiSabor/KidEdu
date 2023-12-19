@@ -7,7 +7,9 @@ import config from './config'; // Adjust the path to your config file
 
 export const apiRequest = async (endpoint, options = {}) => {
   
-  const url = `${config.API_URL}${endpoint}`;
+  const baseURL = endpoint.includes('chat') ? config.Chat_URL : config.API_URL;
+  // Construct the full URL
+  const url = `${baseURL}${endpoint}`;
   console.log(url);
   const token = await AsyncStorage.getItem('userToken');
   const response = await fetch(url, {
